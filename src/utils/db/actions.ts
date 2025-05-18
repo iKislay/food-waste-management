@@ -75,7 +75,7 @@ interface DatabaseSchema {
   collectedWastes: CollectedWaste[];
 }
 
-const DB_PATH = path.join(__dirname, 'data.json'); 
+const DB_PATH = path.join(process.cwd(), 'data', 'data.json'); 
 
 // Helper functions for reading and writing JSON
 async function readDB(): Promise<DatabaseSchema | null> {
