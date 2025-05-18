@@ -1,0 +1,15 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "demo@example.com",
+      "name": "Demo Restaurant",
+      "createdAt": "2024-01-01T00:00:00.000Z"
+    }
+  ],
+  "reports": [],
+  "rewards": [],
+  "collectedWastes": [],
+  "notifications": [],
+  "transactions": []
+}
