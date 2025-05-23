@@ -31,20 +31,16 @@ export async function POST(request: Request) {
 
     const cleanedJson = cleanJsonResponse(verifyResult.data);
     const foodData = JSON.parse(cleanedJson);
-    console.log(userId,
-      location,  // This will now use either provided location or default
-      foodData.foodType,
-      foodData.quantity,
-      metadata,)
+    
     // Create the report with potentially default location
     const report = await createReport(
       userId,
       location,  // This will now use either provided location or default
       foodData.foodType,
       foodData.quantity,
-      foodData.amount,
       image,
       metadata,
+      JSON.stringify(foodData)
     );
 
     return NextResponse.json({ 
