@@ -18,7 +18,7 @@ export async function POST(request: Request) {
     }
 
     // First verify the food using existing verify-food endpoint
-    const verifyResponse = await fetch('http://192.168.14.73:3000/api/verify-food', {
+    const verifyResponse = await fetch('https://food-waste-management-chi.vercel.app/api/verify-food', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ image })
