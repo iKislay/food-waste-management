@@ -3,9 +3,9 @@ export default {
     schema: "./src/utils/db/schema.ts",
     out: "./drizzle",
     dbCredentials: {
-      url: "postgresql://zerotohero_owner:SPVe2rokvBf6@ep-bitter-shadow-a5lbwa60.us-east-2.aws.neon.tech/zerotohero?sslmode=require",
+      url: "postgresql://neondb_owner:npg_dtEJZNyBcz95@ep-nameless-wildflower-a4en05xc-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require",
       connectionString:
-        "postgresql://zerotohero_owner:SPVe2rokvBf6@ep-bitter-shadow-a5lbwa60.us-east-2.aws.neon.tech/zerotohero?sslmode=require",
+        "postgresql://neondb_owner:npg_dtEJZNyBcz95@ep-nameless-wildflower-a4en05xc-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require",
     },
   };
   

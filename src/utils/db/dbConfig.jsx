@@ -1,45 +1,7 @@
-'use client'
-
-const readDB = () => {
-  try {
-    const data = localStorage.getItem('foodWasteDB');
-    if (data) {
-      return JSON.parse(data);
-    }
-    const initialData = {
-      users: [],
-      reports: [],
-      rewards: [],
-      collectedWastes: [],
-      notifications: [],
-      transactions: []
-    };
-    localStorage.setItem('foodWasteDB', JSON.stringify(initialData));
-    return initialData;
-  } catch (error) {
-    console.error('Error reading from database:', error);
-    return {
-      users: [],
-      reports: [],
-      rewards: [],
-      collectedWastes: [],
-      notifications: [],
-      transactions: []
-    };
-  }
-}
-
-const writeDB = (data) => {
-  try {
-    localStorage.setItem('foodWasteDB', JSON.stringify(data));
-    return true;
-  } catch (error) {
-    console.error('Error writing to database:', error);
-    return false;
-  }
-}
-
-export const db = {
-  read: readDB,
-  write: writeDB
-};
+import { neon } from "@neondatabase/serverless";
+import { drizzle } from "drizzle-orm/neon-http";
+import * as schema from "./schema";
+const sql = neon(
+  "postgresql://neondb_owner:npg_dtEJZNyBcz95@ep-nameless-wildflower-a4en05xc-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require"
+);
+export const db = drizzle(sql, { schema });
