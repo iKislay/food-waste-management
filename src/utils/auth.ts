@@ -1,24 +1,25 @@
+import { getUserByEmail, createUser } from './db/actions';
+
 interface User {
+  id: number;
   email: string;
-  password: string;
   name: string;
+  createdAt: Date;
 }
 
-interface UsersData {
-  users: User[];
-}
-
-import usersData from '@/data/users.json';
-const typedUsersData = usersData as UsersData;
-
-export function authenticateUser(email: string, password: string) {
-  const user = typedUsersData.users.find(u => u.email === email && u.password === password);
-  if (user) {
-    localStorage.setItem('userEmail', user.email);
-    localStorage.setItem('userName', user.name);
-    return user;
+export async function authenticateUser(email: string): Promise<User | null> {
+  try {
+    const user = await getUserByEmail(email);
+    if (user) {
+      localStorage.setItem('userEmail', user.email);
+      localStorage.setItem('userName', user.name);
+      return user;
+    }
+    return null;
+  } catch (error) {
+    console.error('Error during authentication:', error);
+    return null;
   }
-  return null;
 }
 
 export function logoutUser() {
@@ -30,4 +31,19 @@ export function getCurrentUser() {
   const email = localStorage.getItem('userEmail');
   const name = localStorage.getItem('userName');
   return email ? { email, name } : null;
+}
+
+export async function registerUser(email: string, name: string): Promise<User | null> {
+  try {
+    const user = await createUser(email, name);
+    if (user) {
+      localStorage.setItem('userEmail', user.email);
+      localStorage.setItem('userName', user.name);
+      return user;
+    }
+    return null;
+  } catch (error) {
+    console.error('Error during registration:', error);
+    return null;
+  }
 }

@@ -1,10 +1,21 @@
 import { NextResponse } from 'next/server';
-import { createReport } from '@/utils/db/actions';
+import { createReport, getUserByEmail } from '@/utils/db/actions';
 
 export async function POST(request: Request) {
   try {
     const DEFAULT_LOCATION = "PES College Of Engineering, Mandya, Karnataka";
-    const { userId, location = DEFAULT_LOCATION, image, metadata } = await request.json();
+    const DEFAULT_EMAIL = "shashank@gmail.com";
+    let { userId, location = DEFAULT_LOCATION, image, metadata } = await request.json();
+
+    // If userId is not provided, get default user
+    if (!userId) {
+      const defaultUser = await getUserByEmail(DEFAULT_EMAIL);
+      if (defaultUser) {
+        userId = defaultUser.id;
+      } else {
+        throw new Error('Default user not found');
+      }
+    }
 
     // First verify the food using existing verify-food endpoint
     const verifyResponse = await fetch('http://localhost:3000/api/verify-food', {
@@ -20,16 +31,20 @@ export async function POST(request: Request) {
 
     const cleanedJson = cleanJsonResponse(verifyResult.data);
     const foodData = JSON.parse(cleanedJson);
-
+    console.log(userId,
+      location,  // This will now use either provided location or default
+      foodData.foodType,
+      foodData.quantity,
+      metadata,)
     // Create the report with potentially default location
     const report = await createReport(
       userId,
       location,  // This will now use either provided location or default
       foodData.foodType,
       foodData.quantity,
+      foodData.amount,
       image,
       metadata,
-      JSON.stringify(foodData)
     );
 
     return NextResponse.json({ 
