@@ -63,7 +63,8 @@ export default function CollectPage() {
           ...task,
           expiryTime: task.date,
           foodType: task.wasteType,
-          quantity: task.amount
+          quantity: task.amount,
+          createdAt: task.date
         })) as CollectionTask[])
       } catch (error) {
         console.error('Error fetching user and tasks:', error)
